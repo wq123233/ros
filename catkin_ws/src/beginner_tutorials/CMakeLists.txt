@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -53,13 +54,17 @@ find_package(catkin REQUIRED COMPONENTS
 #   Message2.msg
 # )
 
+add_message_files(FILES Num.msg)
+#generate_messages(DEPENDENCIES std_msgs)
+
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
 #   Service1.srv
 #   Service2.srv
 # )
-
+add_service_files(FILES AddTwoInts.srv)
+generate_messages(DEPENDENCIES std_msgs)
 ## Generate actions in the 'action' folder
 # add_action_files(
 #   FILES
@@ -105,8 +110,9 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES beginner_tutorials
-#  CATKIN_DEPENDS roscpp rospy std_msgs
+   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 #  DEPENDS system_lib
+#CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 )
 
 ###########
@@ -161,6 +167,17 @@ add_executable(talker src/talker/talker.cpp)
 target_link_libraries(talker ${catkin_LIBRARIES})
 add_dependencies(talker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
+add_executable(listener_srv src/listener/listenersrv.cpp)
+target_link_libraries(listener_srv ${catkin_LIBRARIES})
+add_dependencies(listener_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(talker_srv src/talker/talkersrv.cpp)
+target_link_libraries(talker_srv ${catkin_LIBRARIES})
+add_dependencies(talker_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(talker_para src/talker/talker_para.cpp)
+target_link_libraries(talker_para ${catkin_LIBRARIES})
+add_dependencies(talker_para ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 #############
 ## Install ##
