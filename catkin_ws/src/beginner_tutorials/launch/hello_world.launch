@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+  <node pkg="beginner_tutorials" type="hello_world" respawn="false" name="hello_world" output="screen">
+
+  </node>
+</launch>

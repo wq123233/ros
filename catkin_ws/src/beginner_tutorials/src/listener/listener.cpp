@@ -10,7 +10,6 @@ int main(int argc, char **argv)
 {
     ros::init(argc,argv,"listener");
     ros::NodeHandle n;
-
     ros::Subscriber sub = n.subscribe("chatter", 1000, chatterCallback);
     ros::spin(); //  等待zhixing回调函数 
     return 0;
