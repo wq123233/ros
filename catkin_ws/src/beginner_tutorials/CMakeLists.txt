@@ -175,7 +175,7 @@ add_executable(talker_msg src/talker/talker_msg.cpp)
 target_link_libraries(talker_msg ${catkin_LIBRARIES})
 add_dependencies(talker_msg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
-add_executable(listener_srv src/listener/listenersrv.cpp)
+add_executable(listener_srv src/listener/listenersrv.cpp)  # 所有的与执行文件的名字是一样的
 target_link_libraries(listener_srv ${catkin_LIBRARIES})
 add_dependencies(listener_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
