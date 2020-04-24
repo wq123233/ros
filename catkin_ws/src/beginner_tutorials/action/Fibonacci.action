@@ -1,0 +1,13 @@
+#goal definition
+int32 order
+---
+#result definition
+int32[] sequence
+---
+#feedback
+int32[] sequence
+
+#在action中分为3个部分：
+# （1）goal     客户端发出，服务端接收 
+# （2）result   服务端的执行结束后，反馈给客户端
+# （3）feedback 服务端实时反馈，方便客户端查询

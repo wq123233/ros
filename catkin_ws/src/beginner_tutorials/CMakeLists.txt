@@ -12,6 +12,8 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   std_msgs
   message_generation
+  actionlib_msgs
+  actionlib
 )
 
 ## System dependencies are found with CMake's conventions
@@ -64,20 +66,22 @@ add_message_files(FILES Num.msg)
 #   Service2.srv
 # )
 add_service_files(FILES AddTwoInts.srv)
-generate_messages(DEPENDENCIES std_msgs)
+#generate_messages(DEPENDENCIES std_msgs)
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
+add_action_files(FILES Fibonacci.action)
+  #FILES
 #   Action1.action
 #   Action2.action
-# )
+ 
+
+ 
 
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
 #   std_msgs
 # )
-
+generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
@@ -187,6 +191,13 @@ add_executable(talker_para src/talker/talker_para.cpp)
 target_link_libraries(talker_para ${catkin_LIBRARIES})
 add_dependencies(talker_para ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
+add_executable(fibonacci_server src/fibonacci/fibonacci_server.cpp)
+target_link_libraries(fibonacci_server ${catkin_LIBRARIES})
+add_dependencies(fibonacci_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+add_executable(fibonacci_client src/fibonacci/fibonacci_client.cpp)
+target_link_libraries(fibonacci_client ${catkin_LIBRARIES})
+add_dependencies(fibonacci_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 #############
 ## Install ##
 #############
