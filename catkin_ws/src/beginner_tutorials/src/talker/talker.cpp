@@ -47,8 +47,8 @@ int main(int argc, char **argv)
 
         std::stringstream ss;
         ss << "nihao shijie !" << count;
-        msg.data = ss.str();
-        ROS_INFO("%s", msg.data.c_str());
+        msg.data = ss.str();  // 将string类型的数据转换放到data中。
+        ROS_INFO("%s", msg.data.c_str());  // 将string类型的数据转换为字符串类型，c语言中没有string类型 
         chatter_pub.publish(msg);
         ros::spinOnce();  // 这里可以不加，处理完了回调函数以后会再处理主函数
         loop_rate.sleep();
