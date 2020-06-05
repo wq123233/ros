@@ -1,6 +1,0 @@
-ls -l /dev |grep ttyUSB  串口查看指令
-
-sudo chmod a+rw /dev/ttyUSB0   串口数据修改权限
-
-sudo apt-get install ros-kinetic-serial
-

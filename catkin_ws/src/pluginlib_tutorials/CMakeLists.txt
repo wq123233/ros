@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.8.3)
-project(beginner_tutorials)
+cmake_minimum_required(VERSION 3.0.2)
+project(pluginlib_tutorials)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,13 +8,8 @@ project(beginner_tutorials)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-  message_generation
-  actionlib_msgs
-  actionlib
   pluginlib
+  roscpp
 )
 
 ## System dependencies are found with CMake's conventions
@@ -57,32 +52,26 @@ find_package(catkin REQUIRED COMPONENTS
 #   Message2.msg
 # )
 
-add_message_files(FILES Num.msg Area.msg gps.msg)
-#generate_messages(DEPENDENCIES std_msgs)
-
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
 #   Service1.srv
 #   Service2.srv
 # )
-add_service_files(FILES AddTwoInts.srv Greeting.srv)
-#generate_messages(DEPENDENCIES std_msgs)
+
 ## Generate actions in the 'action' folder
-add_action_files(FILES Fibonacci.action)
-  #FILES
+# add_action_files(
+#   FILES
 #   Action1.action
 #   Action2.action
- 
-
- 
+# )
 
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   std_msgs
+#   std_msgs  # Or other packages containing msgs
 # )
-generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
+
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
 ################################################
@@ -114,10 +103,9 @@ generate_messages(DEPENDENCIES std_msgs actionlib_msgs)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES beginner_tutorials
-   CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
+#  LIBRARIES pluginlib_tutorials
+#  CATKIN_DEPENDS pluginlib roscpp
 #  DEPENDS system_lib
-#CATKIN_DEPENDS roscpp rospy std_msgs message_runtime
 )
 
 ###########
@@ -127,14 +115,18 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/beginner_tutorials.cpp
+#   src/${PROJECT_NAME}/pluginlib_tutorials.cpp
 # )
+
+add_library(polygon_plugins 
+  src/polygon_plugins.cpp
+) 
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -144,7 +136,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/beginner_tutorials_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/pluginlib_tutorials_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -160,74 +152,8 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-add_executable(hello_world src/hello_world/hello_world.cpp)
-target_link_libraries(hello_world ${catkin_LIBRARIES})
-add_dependencies(hello_world ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(listener src/listener/listener.cpp)
-target_link_libraries(listener ${catkin_LIBRARIES})
-add_dependencies(listener ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(talker src/talker/talker.cpp)
-target_link_libraries(talker ${catkin_LIBRARIES})
-add_dependencies(talker ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(listener_msg src/listener/listener_msg.cpp)
-target_link_libraries(listener_msg ${catkin_LIBRARIES})
-add_dependencies(listener_msg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(talker_msg src/talker/talker_msg.cpp)
-target_link_libraries(talker_msg ${catkin_LIBRARIES})
-add_dependencies(talker_msg ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(listener_srv src/listener/listenersrv.cpp)  # 所有的与执行文件的名字是一样的
-target_link_libraries(listener_srv ${catkin_LIBRARIES})
-add_dependencies(listener_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(talker_srv src/talker/talkersrv.cpp)
-target_link_libraries(talker_srv ${catkin_LIBRARIES})
-add_dependencies(talker_srv ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(talker_para src/talker/talker_para.cpp)
-target_link_libraries(talker_para ${catkin_LIBRARIES})
-add_dependencies(talker_para ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(fibonacci_server src/fibonacci/fibonacci_server.cpp)
-target_link_libraries(fibonacci_server ${catkin_LIBRARIES})
-add_dependencies(fibonacci_server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(fibonacci_client src/fibonacci/fibonacci_client.cpp)
-target_link_libraries(fibonacci_client ${catkin_LIBRARIES})
-add_dependencies(fibonacci_client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(plugin_use src/plugin_use/plugin_use.cpp)
-target_link_libraries(plugin_use ${catkin_LIBRARIES})
-add_dependencies(plugin_use ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(publisher src/talker/publisher.cpp)
-target_link_libraries(publisher ${catkin_LIBRARIES})
-add_dependencies(publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(my_listener src/listener/my_listener.cpp)
-target_link_libraries(my_listener ${catkin_LIBRARIES})
-add_dependencies(my_listener ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(server src/listener/server.cpp)  # 所有的与执行文件的名字是一样的
-target_link_libraries(server ${catkin_LIBRARIES})
-add_dependencies(server ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(client src/talker/client.cpp)
-target_link_libraries(client ${catkin_LIBRARIES})
-add_dependencies(client ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(demo_topic_publisher src/demo/demo_topic_publisher.cpp)
-target_link_libraries(demo_topic_publisher ${catkin_LIBRARIES})
-add_dependencies(demo_topic_publisher ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-add_executable(demo_topic_subscriber src/demo/demo_topic_subscriber.cpp)
-target_link_libraries(demo_topic_subscriber ${catkin_LIBRARIES})
-add_dependencies(demo_topic_subscriber ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
+add_executable(polygon_loader src/polygon_loader.cpp)
+target_link_libraries(polygon_loader ${catkin_LIBRARIES}) 
 
 #############
 ## Install ##
@@ -238,7 +164,7 @@ add_dependencies(demo_topic_subscriber ${${PROJECT_NAME}_EXPORTED_TARGETS} ${cat
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
+# catkin_install_python(PROGRAMS
 #   scripts/my_python_script
 #   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
@@ -270,13 +196,13 @@ add_dependencies(demo_topic_subscriber ${${PROJECT_NAME}_EXPORTED_TARGETS} ${cat
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
-install(TARGETS hello_world RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 #############
 ## Testing ##
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_beginner_tutorials.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_pluginlib_tutorials.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
